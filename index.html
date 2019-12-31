@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script>
+      //exercise1
+      const xs = tf.tensor1d([1, 2, 3]);
+      const ys = xs.mul(tf.scalar(5));
+      ys.print();
+
+      const xs2 = tf.tensor([1, 2, 3]);
+      const xs3 = tf.tensor2d([
+        [1, 2],
+        [3, 4]
+      ]);
+      const xs4 = tf.tensor2d([1, 2, 3, 4], [4, 1]);
+      const xs5 = xs4.add(xs4).print();
+      const xs6 = xs4.sub(xs4).print();
+      const xs7 = tf.sub(xs3, 1).print();
+      const xs8 = tf.tensor1d([6, 5, 4, 3]);
+      const xs9 = tf.tensor1d([4, 53, 2, 1]);
+      const xs10 = xs8.add(xs9).print();
+      const xs11 = tf.scalar(9);
+      xs9.print();
+      xs4.print();
+      const xs12 = xs9.add(xs4).print();
+
+      //exercise2
+      function getYs(xs, m, c) {
+        return tf.add(xs.mul(m), c)
+      }
+      const t1 = tf.tensor1d([1, 5, 10]);
+      const t2 = getYs(t1, 2, 1);
+      t2.print();
+
+      //exercise 3
+      const t3 = tf.tensor1d([25, 76, 4, 23, -5, 22]);
+      const max = t3.max(); // 76
+      const min = t3.min(); // -5
+      const minAsNumber = min.dataSync()[0];
+      const maxAsNumber = max.dataSync()[0];
+      const t3N = tf.div(t3.sub(min), maxAsNumber - minAsNumber);
+      console.log(t3N.print());
+
+      //exercise4
+      for (let i = 0; i < 100; i++) {
+        tf.dispose(tf.tensor1d([1, 2, 3]));
+      }
+      const loop2 = tf.tidy(()=> {
+        for (let i = 0; i < 100; i++) {
+        tf.tensor1d([4, 5, 6]);
+      }
+
+      })
+      
+      console.log(tf.memory());
+
+    </script>
+  </head>
+  <body></body>
+</html>
