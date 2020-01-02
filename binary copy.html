@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TFjs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+    <script>
+      async function run() {
+        //import csv
+        const houseSalesDataset = tf.data.csv("./kc_house_data.csv");
+
+        const numOfFeatures =
+          (await houseSalesDataset.columnNames()).length - 1;
+        console.log(numOfFeatures);
+
+        //extract x and y points from the dataset:
+        const pointsDataset = houseSalesDataset
+          .map(record => ({
+            x: record.sqft_living,
+            y: record.price,
+            class: record.waterfront
+          }))
+          .batch(10);
+
+          console.log("antes points")
+        const points = [];
+        await pointsDataset.forEachAsync(e => {
+          points.push(e)
+        });
+        console.log("despues points")
+   
+        if (points.length % 2 !== 0) {
+          // If odd number of elements
+          points.pop(); // remove one element
+        }
+       
+        console.log(points);
+        
+      }
+
+      run();
+    </script>
+  </head>
+
+  <body></body>
+</html>
